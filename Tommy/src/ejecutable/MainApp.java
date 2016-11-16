@@ -20,6 +20,7 @@ public class MainApp extends PApplet {
 	@Override
 	public void setup() {
 		noStroke();
+		imageMode(CENTER);
 		colorMode(HSB, 360, 100, 100, 100);
 		logica = new Logica(this);
 	}
