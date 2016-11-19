@@ -64,7 +64,7 @@ public class Logica {
 		case 2:
 			jColor.click();
 			break;
-			
+
 		case 3:
 			jOrden.click();
 			break;

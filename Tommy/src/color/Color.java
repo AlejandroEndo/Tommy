@@ -19,7 +19,7 @@ public class Color {
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		
+
 		tam = 200;
 	}
 

@@ -24,9 +24,9 @@ public class Inicio extends Thread {
 
 		x = app.width / 2;
 		y = (app.height / 2) + 100;
-		s=450;
+		s = 450;
 		trans = 0.0001f;
-		
+
 		start();
 	}
 

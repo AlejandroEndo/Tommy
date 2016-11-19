@@ -37,7 +37,7 @@ public class JuegoOrden {
 			Elementos e = elementos.get(i);
 			if (PApplet.dist(e.getX(), e.getY(), app.mouseX, app.mouseY) < e.getS() / 2) {
 				e.setTrans(100);
-			} else{
+			} else {
 				e.setTrans(0);
 			}
 		}

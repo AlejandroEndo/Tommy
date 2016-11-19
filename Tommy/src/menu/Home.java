@@ -48,7 +48,7 @@ public class Home extends Thread {
 	}
 
 	public void draw() {
-		 app.image(fondo, app.width/2, app.height/2);
+		app.image(fondo, app.width / 2, app.height / 2);
 		app.image(fondoH, app.width / 2, app.height / 2);
 
 		app.image(tommy, app.width / 4, app.height / 2);
@@ -60,11 +60,11 @@ public class Home extends Thread {
 		app.image(informacion, 1015, 445);
 		app.noTint();
 	}
-	
+
 	public float getTrans() {
 		return trans;
 	}
-	
+
 	public void setTrans(float trans) {
 		this.trans = trans;
 	}
