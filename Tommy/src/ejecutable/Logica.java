@@ -22,8 +22,8 @@ public class Logica {
 
 	public Logica(PApplet app) {
 		this.app = app;
-		
-		pantalla = 0;
+
+		pantalla = 3;
 
 		inicio = new Inicio(app);
 		home = new Home(app);
@@ -33,13 +33,13 @@ public class Logica {
 	}
 
 	public void draw() {
-		//System.out.println(app.mouseX + " " + app.mouseY);
+		// System.out.println(app.mouseX + " " + app.mouseY);
 		switch (pantalla) {
 
 		case 0: // Inicio, no hay interaccion
 			inicio.draw();
-			
-			if (inicio.getTrans() <= 0){
+
+			if (inicio.getTrans() <= 0) {
 				pantalla = 1;
 				home.setTrans(0);
 			}
@@ -52,15 +52,23 @@ public class Logica {
 		case 2: // Juego 1, arrastrar bolitas
 			jColor.draw();
 			break;
-			
+
 		case 3: // Juego 2, clickear en orden
-			
+			jOrden.draw();
 			break;
 		}
 	}
 
 	public void click() {
-		jColor.click();
+		switch (pantalla) {
+		case 2:
+			jColor.click();
+			break;
+			
+		case 3:
+			jOrden.click();
+			break;
+		}
 	}
 
 	public void drag() {
