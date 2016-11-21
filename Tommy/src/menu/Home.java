@@ -19,7 +19,8 @@ public class Home {
 	private PImage juegos;
 
 	private float[] tam = new float[4];
-
+	
+	private float promedioPuntos;
 	private float trans;
 
 	public Home(PApplet app) {
@@ -61,7 +62,7 @@ public class Home {
 	private void animacion() {
 		if (trans >= 100) {
 			if (tam[3] > -150) {
-				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -100, -100) * 0.02f;
+				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -promedioPuntos, -promedioPuntos) * 0.02f;
 			}
 		}
 		
@@ -94,5 +95,13 @@ public class Home {
 
 	public void setTrans(float trans) {
 		this.trans = trans;
+	}
+	
+	public float getPromedioPuntos() {
+		return promedioPuntos;
+	}
+	
+	public void setPromedioPuntos(float promedioPuntos) {
+		this.promedioPuntos = promedioPuntos;
 	}
 }

@@ -1,12 +1,17 @@
 package ejecutable;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import almacenamiento.BaseDeDatos;
+import almacenamiento.Puntaje;
 import color.JuegoColor;
+import concentracion.JuegoConcentracion;
 import memoria.JuegoMemoria;
 import menu.Home;
 import menu.Inicio;
 import menu.Juego;
+import menu.Puntos;
 import orden.JuegoOrden;
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -17,13 +22,18 @@ public class Logica {
 
 	private PFont somatic;
 
+	private BaseDeDatos datos;
+	private Puntaje p;
+
 	private Inicio inicio;
 	private Home home;
 	private Juego juego;
+	private Puntos puntos;
 
 	private JuegoColor jColor;
 	private JuegoOrden jOrden;
 	private JuegoMemoria jMemoria;
+	private JuegoConcentracion jConcentracion;
 
 	private int pantalla;
 
@@ -33,15 +43,21 @@ public class Logica {
 		somatic = app.loadFont("../data/somatic.vlw");
 		app.textFont(somatic, 27);
 
-		pantalla = 1;
+		pantalla = 0;
+
+		datos = new BaseDeDatos("data" + File.separator + "BaseDeDatos.xml");
+		p = new Puntaje(datos.getConcentracion(), datos.getMemoria(), datos.getMotricidad(), datos.getComunicacion());
 
 		inicio = new Inicio(app);
 		home = new Home(app);
 		juego = new Juego(app);
+		puntos = new Puntos(app);
 
 		jColor = new JuegoColor(app);
 		jOrden = new JuegoOrden(app);
 		jMemoria = new JuegoMemoria(app);
+		jConcentracion = new JuegoConcentracion(app);
+
 	}
 
 	public void draw() {
@@ -59,49 +75,62 @@ public class Logica {
 
 		case 1: // Menu home... desde aqui se comienza a navegar
 			home.draw();
+			System.out.println(datos.getComunicacion());
+			home.setPromedioPuntos((p.getComunicacion() + p.getConcentracion() + p.getMemoria() + p.getMotricidad()) / 4);
 			break;
 
-		case 2:
-			juego.draw();
-			break;
-			
-		case 5: // Juego 1, arrastrar bolitas
-			jColor.draw();
+		case 2: // Entrenate
+
 			break;
 
-		case 3: // Juego 2, clickear en orden
-			jOrden.draw();
+		case 3: // Juegos
 			break;
 
-		case 4:
-			jMemoria.draw();
+		case 4: // Puntos
+			puntos.draw();
+			break;
+
+		case 5: // Informacion
+
+			break;
+
+		case 6:
+
 			break;
 		}
 	}
 
 	public void click() {
 		switch (pantalla) {
-
 		case 1:
 			if (PApplet.dist(app.mouseX, app.mouseY, 778, 251) < 70) { // entrenate
-				pantalla++;
+				pantalla = 2;
+			}
+			if (PApplet.dist(app.mouseX, app.mouseY, 1015, 251) < 70) { // Juegos
+				pantalla = 3;
+			}
+			if (PApplet.dist(app.mouseX, app.mouseY, 778, 445) < 70) { // Puntos
+				pantalla = 4;
+			}
+			if (PApplet.dist(app.mouseX, app.mouseY, 1015, 445) < 70) { // Informacion
+				pantalla = 5;
 			}
 			break;
 
-		case 2:
-			
-			break;
-			
-		case 5:
-			jColor.click();
+		case 2: // entrenate
+
 			break;
 
-		case 3:
-			jOrden.click();
+		case 3: // juegos
+
 			break;
 
-		case 4:
-			jMemoria.click();
+		case 4: // puntos
+
+			break;
+
+		case 5: // informacion
+
 			break;
 		}
 	}
