@@ -1,6 +1,7 @@
 package menu;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 public class Juego {
@@ -17,6 +18,12 @@ public class Juego {
 	private PImage motricidad;
 	private PImage comunicacion;
 
+	private float[] tam = new float[4];
+
+	private float concentracionP;
+	private float memoriaP;
+	private float motricidadP;
+	private float comunicacionP;
 	private float trans;
 
 	public Juego(PApplet app) {
@@ -54,6 +61,45 @@ public class Juego {
 	}
 
 	private void animacion() {
+		if (trans >= 100) {
+			if (tam[0] > -150) {
+				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -concentracionP, -concentracionP) * 0.02f;
+			}
+			if (tam[1] > -150) {
+				tam[1] += -1 * PApplet.dist(tam[1], tam[1], -memoriaP, -memoriaP) * 0.02f;
+			}
+			if (tam[2] > -150) {
+				tam[2] += -1 * PApplet.dist(tam[2], tam[2], -motricidadP, -motricidadP) * 0.02f;
+			}
+			if (tam[3] > -150) {
+				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -comunicacionP, -comunicacionP) * 0.02f;
+			}
+		}
+
+		app.rectMode(PConstants.CENTER);
+		app.fill(175, 50, 95);
+		// Entrenate
+		app.rect(778, 251, 150, 150);
+		// Juegos
+		app.rect(1015, 251, 150, 150);
+		// Puntos
+		app.rect(778, 445, 150, 150);
+		// Informacion
+		app.rect(1015, 445, 150, 150);
+
+		app.rectMode(PConstants.CORNER);
+		app.fill(56, 40, 93);
+		// Entrenate
+		app.rect(703, 326, 150, tam[0]);
+		// Juegos
+		app.rect(940, 326, 150, tam[1]);
+		// Puntos
+		app.rect(703, 518, 150, tam[2]);
+		// Informacion
+		app.rect(940, 518, 150, tam[3]);
+	}
+
+	public void click() {
 
 	}
 
@@ -64,4 +110,38 @@ public class Juego {
 	public void setTrans(float trans) {
 		this.trans = trans;
 	}
+
+	public float getConcentracionP() {
+		return concentracionP;
+	}
+
+	public void setConcentracionP(float concentracionP) {
+		this.concentracionP = concentracionP;
+	}
+
+	public float getMemoriaP() {
+		return memoriaP;
+	}
+
+	public void setMemoriaP(float memoriaP) {
+		this.memoriaP = memoriaP;
+	}
+
+	public float getMotricidadP() {
+		return motricidadP;
+	}
+
+	public void setMotricidadP(float motricidadP) {
+		this.motricidadP = motricidadP;
+	}
+
+	public float getComunicacionP() {
+		return comunicacionP;
+	}
+
+	public void setComunicacionP(float comunicacionP) {
+		this.comunicacionP = comunicacionP;
+	}
+	
+	
 }

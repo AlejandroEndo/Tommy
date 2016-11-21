@@ -2,16 +2,26 @@ package almacenamiento;
 
 public class Puntaje {
 
+	private int entrenamiento;
 	private int concentracion;
 	private int memoria;
 	private int motricidad;
 	private int comunicacion;
 
-	public Puntaje(int concentracion, int memoria, int motricidad, int comunicacion) {
+	public Puntaje(int entrenamiento, int concentracion, int memoria, int motricidad, int comunicacion) {
+		this.entrenamiento = entrenamiento;
 		this.concentracion = concentracion;
 		this.memoria = memoria;
 		this.motricidad = motricidad;
 		this.comunicacion = comunicacion;
+	}
+
+	public int getEntrenamiento() {
+		return entrenamiento;
+	}
+
+	public void setEntrenamiento(int entrenamiento) {
+		this.entrenamiento = entrenamiento;
 	}
 
 	public int getConcentracion() {

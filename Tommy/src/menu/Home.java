@@ -21,6 +21,7 @@ public class Home {
 	private float[] tam = new float[4];
 	
 	private float promedioPuntos;
+	private float entrenamiento;
 	private float trans;
 
 	public Home(PApplet app) {
@@ -61,8 +62,17 @@ public class Home {
 
 	private void animacion() {
 		if (trans >= 100) {
+			if (tam[0] > -150) {
+				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -entrenamiento, -entrenamiento) * 0.02f;
+			}
+			if (tam[1] > -150) {
+				tam[1] += -1 * PApplet.dist(tam[1], tam[1], -promedioPuntos, -promedioPuntos) * 0.02f;
+			}
+			if (tam[2] > -150) {
+				tam[2] += -1 * PApplet.dist(tam[2], tam[2], -((entrenamiento+promedioPuntos)/2), -((entrenamiento+promedioPuntos)/2)) * 0.02f;
+			}
 			if (tam[3] > -150) {
-				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -promedioPuntos, -promedioPuntos) * 0.02f;
+				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -150, -150) * 0.02f;
 			}
 		}
 		
@@ -89,6 +99,22 @@ public class Home {
 		app.rect(940, 518, 150, tam[3]);
 	}
 
+	public float[] getTam() {
+		return tam;
+	}
+	
+	public void setTam(float[] tam) {
+		this.tam = tam;
+	}
+	
+	public float getEntrenamiento() {
+		return entrenamiento;
+	}
+	
+	public void setEntrenamiento(float entrenamiento) {
+		this.entrenamiento = entrenamiento;
+	}
+	
 	public float getTrans() {
 		return trans;
 	}

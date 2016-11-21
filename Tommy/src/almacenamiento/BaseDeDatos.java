@@ -16,6 +16,7 @@ public class BaseDeDatos {
 
 	private String ruta;
 
+	private int entrenamiento;
 	private int concentracion;
 	private int memoria;
 	private int motricidad;
@@ -38,21 +39,33 @@ public class BaseDeDatos {
 
 	public void agregarDato(Puntaje p) {
 		XML nuevo = new XML("dato");
+		nuevo.setInt("entrenamiento", p.getEntrenamiento());
 		nuevo.setInt("concentracion", p.getConcentracion());
 		nuevo.setInt("memoria", p.getMemoria());
 		nuevo.setInt("motricidad", p.getMotricidad());
 		nuevo.setInt("comunicacion", p.getComunicacion());
+		XML removible = xml.getChild("dato");
+		xml.removeChild(removible);
 		xml.addChild(nuevo);
 		xml.save(new File(ruta));
 	}
 
 	public void leer() {
 		XML lemao = xml.getChild("dato");
+		entrenamiento = lemao.getInt("entrenamiento");
 		concentracion = lemao.getInt("concentracion");
 		memoria = lemao.getInt("memoria");
 		motricidad = lemao.getInt("motricidad");
 		comunicacion = lemao.getInt("comunicacion");
 		System.out.println(concentracion);
+	}
+
+	public int getEntrenamiento() {
+		return entrenamiento;
+	}
+
+	public void setEntrenamiento(int entrenamiento) {
+		this.entrenamiento = entrenamiento;
 	}
 
 	public int getConcentracion() {
@@ -87,5 +100,4 @@ public class BaseDeDatos {
 		this.comunicacion = comunicacion;
 	}
 
-	
 }
