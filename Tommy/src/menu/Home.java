@@ -49,6 +49,8 @@ public class Home extends Thread {
 
 	public void draw() {
 		app.image(fondo, app.width / 2, app.height / 2);
+		app.fill(180, 100, 100);
+		app.rect(660, 200, 200, 150);
 		app.image(fondoH, app.width / 2, app.height / 2);
 
 		app.image(tommy, app.width / 4, app.height / 2);

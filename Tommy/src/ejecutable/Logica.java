@@ -23,7 +23,7 @@ public class Logica {
 	public Logica(PApplet app) {
 		this.app = app;
 
-		pantalla = 3;
+		pantalla = 1;
 
 		inicio = new Inicio(app);
 		home = new Home(app);
