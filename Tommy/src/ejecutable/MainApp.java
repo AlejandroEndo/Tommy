@@ -22,6 +22,7 @@ public class MainApp extends PApplet {
 		noStroke();
 		textAlign(CENTER);
 		imageMode(CENTER);
+		rectMode(CENTER);
 		colorMode(HSB, 360, 100, 100, 100);
 		logica = new Logica(this);
 	}

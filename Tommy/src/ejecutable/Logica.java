@@ -6,6 +6,7 @@ import color.JuegoColor;
 import memoria.JuegoMemoria;
 import menu.Home;
 import menu.Inicio;
+import menu.Juego;
 import orden.JuegoOrden;
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -18,6 +19,7 @@ public class Logica {
 
 	private Inicio inicio;
 	private Home home;
+	private Juego juego;
 
 	private JuegoColor jColor;
 	private JuegoOrden jOrden;
@@ -31,10 +33,11 @@ public class Logica {
 		somatic = app.loadFont("../data/somatic.vlw");
 		app.textFont(somatic, 27);
 
-		pantalla = 4;
+		pantalla = 1;
 
 		inicio = new Inicio(app);
 		home = new Home(app);
+		juego = new Juego(app);
 
 		jColor = new JuegoColor(app);
 		jOrden = new JuegoOrden(app);
@@ -58,7 +61,11 @@ public class Logica {
 			home.draw();
 			break;
 
-		case 2: // Juego 1, arrastrar bolitas
+		case 2:
+			juego.draw();
+			break;
+			
+		case 5: // Juego 1, arrastrar bolitas
 			jColor.draw();
 			break;
 
@@ -74,14 +81,25 @@ public class Logica {
 
 	public void click() {
 		switch (pantalla) {
+
+		case 1:
+			if (PApplet.dist(app.mouseX, app.mouseY, 778, 251) < 70) { // entrenate
+				pantalla++;
+			}
+			break;
+
 		case 2:
+			
+			break;
+			
+		case 5:
 			jColor.click();
 			break;
 
 		case 3:
 			jOrden.click();
 			break;
-			
+
 		case 4:
 			jMemoria.click();
 			break;
