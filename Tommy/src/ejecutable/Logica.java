@@ -3,33 +3,42 @@ package ejecutable;
 import java.util.ArrayList;
 
 import color.JuegoColor;
+import memoria.JuegoMemoria;
 import menu.Home;
 import menu.Inicio;
 import orden.JuegoOrden;
 import processing.core.PApplet;
+import processing.core.PFont;
 
 public class Logica {
 
 	private PApplet app;
+
+	private PFont somatic;
 
 	private Inicio inicio;
 	private Home home;
 
 	private JuegoColor jColor;
 	private JuegoOrden jOrden;
+	private JuegoMemoria jMemoria;
 
 	private int pantalla;
 
 	public Logica(PApplet app) {
 		this.app = app;
 
-		pantalla = 1;
+		somatic = app.loadFont("../data/somatic.vlw");
+		app.textFont(somatic, 27);
+
+		pantalla = 4;
 
 		inicio = new Inicio(app);
 		home = new Home(app);
 
 		jColor = new JuegoColor(app);
 		jOrden = new JuegoOrden(app);
+		jMemoria = new JuegoMemoria(app);
 	}
 
 	public void draw() {
@@ -56,6 +65,10 @@ public class Logica {
 		case 3: // Juego 2, clickear en orden
 			jOrden.draw();
 			break;
+
+		case 4:
+			jMemoria.draw();
+			break;
 		}
 	}
 
@@ -67,6 +80,10 @@ public class Logica {
 
 		case 3:
 			jOrden.click();
+			break;
+			
+		case 4:
+			jMemoria.click();
 			break;
 		}
 	}
