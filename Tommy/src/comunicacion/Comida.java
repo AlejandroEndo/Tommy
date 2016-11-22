@@ -8,7 +8,7 @@ public class Comida {
 	private PApplet app;
 
 	private PImage[] comida = new PImage[4];
-	private String[] comidas = { "Helado", "Dulce", "Dombom", "Dona" };
+	private String[] comidas = { "Helado", "Dulce", "Bombom", "Dona" };
 
 	private float x;
 	private float y;

@@ -34,6 +34,8 @@ public class JuegoComunicacion extends Thread {
 
 	private boolean iniciar;
 	private boolean inicio;
+	
+	private boolean guarde;
 
 	private String reloj;
 	private String nuevoReloj;
@@ -46,6 +48,7 @@ public class JuegoComunicacion extends Thread {
 		puntaje = app.loadImage("../data/entrenamientoI.png");
 
 		iniciar = false;
+		guarde = false;
 
 		comida = new Comida(app, 0, 0, id);
 
@@ -140,6 +143,7 @@ public class JuegoComunicacion extends Thread {
 			}
 		} else {
 			if (app.mouseX > 800 && app.mouseX < 996 && app.mouseY > 537 && app.mouseY < 610) {
+				guarde = true;
 				reiniciar();
 			}
 		}
@@ -204,6 +208,26 @@ public class JuegoComunicacion extends Thread {
 			ar[index] = ar[i];
 			ar[i] = a;
 		}
+	}
+	
+	public String getReloj() {
+		return reloj;
+	}
+	
+	public boolean isGuarde() {
+		return guarde;
+	}
+	
+	public void setGuarde(boolean guarde) {
+		this.guarde = guarde;
+	}
+	
+	public void setSec(int sec) {
+		this.sec = sec;
+	}
+	
+	public void setMin(int min) {
+		this.min = min;
 	}
 
 	public boolean isIniciar() {

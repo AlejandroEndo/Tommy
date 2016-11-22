@@ -22,6 +22,10 @@ public class Home {
 	
 	private float promedioPuntos;
 	private float entrenamiento;
+	
+	private float escalaP;
+	private float escalaE;
+	
 	private float trans;
 
 	public Home(PApplet app) {
@@ -61,15 +65,17 @@ public class Home {
 	}
 
 	private void animacion() {
+		escalaE = PApplet.map(entrenamiento, 0, 10000, 0, 150);
+		escalaP = PApplet.map(promedioPuntos, 0, 1000, 0, 150);
 		if (trans >= 100) {
 			if (tam[0] > -150) {
-				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -entrenamiento, -entrenamiento) * 0.02f;
+				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -escalaE, -escalaE) * 0.02f;
 			}
 			if (tam[1] > -150) {
-				tam[1] += -1 * PApplet.dist(tam[1], tam[1], -promedioPuntos, -promedioPuntos) * 0.02f;
+				tam[1] += -1 * PApplet.dist(tam[1], tam[1], -escalaP, -escalaP) * 0.02f;
 			}
 			if (tam[2] > -150) {
-				tam[2] += -1 * PApplet.dist(tam[2], tam[2], -((entrenamiento+promedioPuntos)/2), -((entrenamiento+promedioPuntos)/2)) * 0.02f;
+				tam[2] += -1 * PApplet.dist(tam[2], tam[2], -((escalaE+escalaP)/2), -((escalaE+escalaP)/2)) * 0.02f;
 			}
 			if (tam[3] > -150) {
 				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -150, -150) * 0.02f;

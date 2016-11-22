@@ -218,7 +218,6 @@ public class Logica {
 	}
 
 	public void click() {
-		// datos.agregarDato(new Puntaje(50,100,100,100,100));
 		switch (pantalla) {
 		case 1:
 			if (PApplet.dist(app.mouseX, app.mouseY, 778, 251) < 70) { // entrenate
@@ -238,8 +237,14 @@ public class Logica {
 			break;
 
 		case 2: // entrenate
-			if (!menuAntes && !menuDespues)
+			if (!menuAntes && !menuDespues){
 				entrenamiento.click();
+				if (entrenamiento.isGuarde()) {
+					p.setEntrenamiento(p.getEntrenamiento() + entrenamiento.getPuntajeLocal());
+					datos.agregarDato(p);
+					entrenamiento.setGuarde(false);
+				}
+			}
 
 			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
 				if (!entrenamiento.isIniciar())
@@ -250,10 +255,14 @@ public class Logica {
 
 			if (menuAntes) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					p.setEntrenamiento(p.getEntrenamiento() + entrenamiento.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuAntes = false;
 				}
 				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					p.setEntrenamiento(p.getEntrenamiento() + entrenamiento.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuAntes = false;
 				}
@@ -263,10 +272,14 @@ public class Logica {
 			}
 			if (menuDespues) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					p.setEntrenamiento(p.getEntrenamiento() + entrenamiento.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuDespues = false;
 				}
 				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					p.setEntrenamiento(p.getEntrenamiento() + entrenamiento.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuDespues = false;
 				}
@@ -287,15 +300,25 @@ public class Logica {
 			if (PApplet.dist(app.mouseX, app.mouseY, 778, 251) < 70) { // concentracion
 				jConcentracion.setSec(0);
 				jConcentracion.setMin(0);
+				jConcentracion.reiniciar();
 				pantalla = 6;
 			}
 			if (PApplet.dist(app.mouseX, app.mouseY, 1015, 251) < 70) { // memoria
+				jMemoria.setSec(0);
+				jMemoria.setMin(0);
+				jMemoria.reiniciar();
 				pantalla = 7;
 			}
 			if (PApplet.dist(app.mouseX, app.mouseY, 778, 445) < 70) { // motricidad
+				jMotricidad.setSec(0);
+				jMotricidad.setMin(0);
+				jMotricidad.reiniciar();
 				pantalla = 8;
 			}
 			if (PApplet.dist(app.mouseX, app.mouseY, 1015, 445) < 70) { // comunicacion
+				jComunicacion.setSec(0);
+				jComunicacion.setMin(0);
+				jComunicacion.reiniciar();
 				pantalla = 9;
 			}
 			break;
@@ -325,8 +348,14 @@ public class Logica {
 			break;
 
 		case 6: // concentracion
-			if (!menuAntes && !menuDespues)
+			if (!menuAntes && !menuDespues) {
 				jConcentracion.click();
+				if (jConcentracion.isGuarde()) {
+					p.setConcentracion(p.getConcentracion() + jConcentracion.getPuntajeLocal());
+					datos.agregarDato(p);
+					jConcentracion.setGuarde(false);
+				}
+			}
 
 			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
 				if (!jConcentracion.isIniciar() || jConcentracion.getPuntajeLocal() == 200)
@@ -337,10 +366,14 @@ public class Logica {
 
 			if (menuAntes) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					p.setConcentracion(p.getConcentracion() + jConcentracion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuAntes = false;
 				}
 				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					p.setConcentracion(p.getConcentracion() + jConcentracion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuAntes = false;
 				}
@@ -350,10 +383,14 @@ public class Logica {
 			}
 			if (menuDespues) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					p.setConcentracion(p.getConcentracion() + jConcentracion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuDespues = false;
 				}
 				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					p.setConcentracion(p.getConcentracion() + jConcentracion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuDespues = false;
 				}
@@ -369,9 +406,14 @@ public class Logica {
 			break;
 
 		case 7: // memoria
-			if (!menuAntes && !menuDespues)
+			if (!menuAntes && !menuDespues) {
 				jMemoria.click();
-
+				if (jMemoria.isGuarde()) {
+					p.setMemoria(p.getMemoria() + jMemoria.getPuntajeLocal());
+					datos.agregarDato(p);
+					jMemoria.setGuarde(false);
+				}
+			}
 			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
 				if (!jMemoria.isIniciar() || jMemoria.getPuntajeLocal() == 200)
 					menuAntes = true;
@@ -381,10 +423,14 @@ public class Logica {
 
 			if (menuAntes) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					p.setMemoria(p.getMemoria() + jMemoria.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuAntes = false;
 				}
 				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					p.setMemoria(p.getMemoria() + jMemoria.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuAntes = false;
 				}
@@ -394,10 +440,14 @@ public class Logica {
 			}
 			if (menuDespues) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					p.setMemoria(p.getMemoria() + jMemoria.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuDespues = false;
 				}
 				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					p.setMemoria(p.getMemoria() + jMemoria.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuDespues = false;
 				}
@@ -413,8 +463,14 @@ public class Logica {
 			break;
 
 		case 8: // motricidad
-			if (!menuAntes && !menuDespues)
+			if (!menuAntes && !menuDespues) {
 				jMotricidad.click();
+				if (jMotricidad.isGuarde()) {
+					p.setMotricidad(p.getMotricidad() + jMotricidad.getPuntajeLocal());
+					datos.agregarDato(p);
+					jMotricidad.setGuarde(false);
+				}
+			}
 
 			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
 				if (!jMotricidad.isIniciar() || jMotricidad.getPuntajeLocal() == 200)
@@ -425,10 +481,14 @@ public class Logica {
 
 			if (menuAntes) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					p.setMotricidad(p.getMotricidad() + jMotricidad.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuAntes = false;
 				}
 				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					p.setMotricidad(p.getMotricidad() + jMotricidad.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuAntes = false;
 				}
@@ -438,10 +498,14 @@ public class Logica {
 			}
 			if (menuDespues) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					p.setMotricidad(p.getMotricidad() + jMotricidad.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuDespues = false;
 				}
 				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					p.setMotricidad(p.getMotricidad() + jMotricidad.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuDespues = false;
 				}
@@ -457,8 +521,14 @@ public class Logica {
 			break;
 
 		case 9: // comunicacion
-			if (!menuAntes && !menuDespues)
+			if (!menuAntes && !menuDespues) {
 				jComunicacion.click();
+				if (jComunicacion.isGuarde()) {
+					p.setComunicacion(p.getComunicacion() + jComunicacion.getPuntajeLocal());
+					datos.agregarDato(p);
+					jComunicacion.setGuarde(false);
+				}
+			}
 
 			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
 				if (!jComunicacion.isIniciar() || jComunicacion.getPuntajeLocal() == 200)
@@ -469,10 +539,14 @@ public class Logica {
 
 			if (menuAntes) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					p.setComunicacion(p.getComunicacion() + jComunicacion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuAntes = false;
 				}
 				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					p.setComunicacion(p.getComunicacion() + jComunicacion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuAntes = false;
 				}
@@ -482,10 +556,14 @@ public class Logica {
 			}
 			if (menuDespues) {
 				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					p.setComunicacion(p.getComunicacion() + jComunicacion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 1;
 					menuDespues = false;
 				}
 				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					p.setComunicacion(p.getComunicacion() + jComunicacion.getPuntajeLocal());
+					datos.agregarDato(p);
 					pantalla = 3;
 					menuDespues = false;
 				}

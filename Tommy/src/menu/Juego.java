@@ -25,6 +25,12 @@ public class Juego {
 	private float motricidadP;
 	private float comunicacionP;
 	private float trans;
+	
+	private float escalaCon;
+	private float escalaMem;
+	private float escalaMot;
+	private float escalaCom;
+	
 
 	public Juego(PApplet app) {
 		this.app = app;
@@ -61,18 +67,22 @@ public class Juego {
 	}
 
 	private void animacion() {
+		escalaCon = PApplet.map(concentracionP, 0, 1000, 0, 150);
+		escalaMem = PApplet.map(memoriaP, 0, 1000, 0, 150);
+		escalaMot = PApplet.map(motricidadP, 0, 1000, 0, 150);
+		escalaCom = PApplet.map(comunicacionP, 0, 1000, 0, 150);
 		if (trans >= 100) {
 			if (tam[0] > -150) {
-				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -concentracionP, -concentracionP) * 0.02f;
+				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -escalaCon, -escalaCon) * 0.02f;
 			}
 			if (tam[1] > -150) {
-				tam[1] += -1 * PApplet.dist(tam[1], tam[1], -memoriaP, -memoriaP) * 0.02f;
+				tam[1] += -1 * PApplet.dist(tam[1], tam[1], -escalaMem, -escalaMem) * 0.02f;
 			}
 			if (tam[2] > -150) {
-				tam[2] += -1 * PApplet.dist(tam[2], tam[2], -motricidadP, -motricidadP) * 0.02f;
+				tam[2] += -1 * PApplet.dist(tam[2], tam[2], -escalaMot, -escalaMot) * 0.02f;
 			}
 			if (tam[3] > -150) {
-				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -comunicacionP, -comunicacionP) * 0.02f;
+				tam[3] += -1 * PApplet.dist(tam[3], tam[3], -escalaCom, -escalaCom) * 0.02f;
 			}
 		}
 

@@ -28,6 +28,7 @@ public class JuegoConcentracion extends Thread {
 	private int puntajeLocal;
 
 	private boolean iniciar;
+	private boolean guarde;
 
 	private String reloj;
 	private String nuevoReloj;
@@ -42,6 +43,7 @@ public class JuegoConcentracion extends Thread {
 		loadlvlUno();
 
 		iniciar = false;
+		guarde = false;
 		start();
 	}
 
@@ -163,10 +165,15 @@ public class JuegoConcentracion extends Thread {
 			if (app.mouseX > 800 && app.mouseX < 996 && app.mouseY > 537 && app.mouseY < 610) {
 				puntajeLocal = 0;
 				reiniciar();
+				guarde = true;
 			}
 		}
 	}
-
+	
+	public String getReloj() {
+		return reloj;
+	}
+	
 	public int getPuntajeLocal() {
 		return puntajeLocal;
 	}
@@ -197,5 +204,13 @@ public class JuegoConcentracion extends Thread {
 
 	public void setMin(int min) {
 		this.min = min;
+	}
+	
+	public boolean isGuarde() {
+		return guarde;
+	}
+	
+	public void setGuarde(boolean guarde) {
+		this.guarde = guarde;
 	}
 }

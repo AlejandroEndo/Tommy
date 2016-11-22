@@ -46,6 +46,7 @@ public class JuegoMemoria extends Thread {
 
 	private boolean valideFigura;
 	private boolean valideAnimal;
+	private boolean guarde;
 
 	private boolean iniciar;
 
@@ -58,6 +59,8 @@ public class JuegoMemoria extends Thread {
 
 		lvl = 0;
 
+		guarde = false;
+		
 		loadFiguras();
 		loadAnimales();
 
@@ -299,10 +302,31 @@ public class JuegoMemoria extends Thread {
 			}
 		} else {
 			if (app.mouseX > 800 && app.mouseX < 996 && app.mouseY > 537 && app.mouseY < 610) {
-				puntajeLocal = 0;
+				guarde = true;
+				//puntajeLocal = 0;
 				reiniciar();
 			}
 		}
+	}
+	
+	public String getReloj() {
+		return reloj;
+	}
+	
+	public boolean isGuarde() {
+		return guarde;
+	}
+	
+	public void setGuarde(boolean guarde) {
+		this.guarde = guarde;
+	}
+	
+	public void setSec(int sec) {
+		this.sec = sec;
+	}
+	
+	public void setMin(int min) {
+		this.min = min;
 	}
 
 	public int getLvl() {

@@ -25,6 +25,7 @@ public class JuegoMotricidad extends Thread {
 	private int id;
 
 	private boolean iniciar;
+	private boolean guarde;
 
 	private String reloj;
 	private String nuevoReloj;
@@ -41,6 +42,7 @@ public class JuegoMotricidad extends Thread {
 		instrucciones[3] = app.loadImage("../data/motricidadPandaI.png");
 
 		iniciar = false;
+		guarde = false;
 
 		loadFiguras();
 
@@ -116,7 +118,8 @@ public class JuegoMotricidad extends Thread {
 			}
 		} else {
 			if (app.mouseX > 800 && app.mouseX < 996 && app.mouseY > 537 && app.mouseY < 610) {
-				puntajeLocal = 0;
+//				puntajeLocal = 0;
+				guarde = true;
 				reiniciar();
 			}
 		}
@@ -149,6 +152,26 @@ public class JuegoMotricidad extends Thread {
 			ar[index] = ar[i];
 			ar[i] = a;
 		}
+	}
+	
+	public String getReloj() {
+		return reloj;
+	}
+	
+	public boolean isGuarde() {
+		return guarde;
+	}
+	
+	public void setGuarde(boolean guarde) {
+		this.guarde = guarde;
+	}
+	
+	public void setSec(int sec) {
+		this.sec = sec;
+	}
+	
+	public void setMin(int min) {
+		this.min = min;
 	}
 	
 	public boolean isIniciar() {
