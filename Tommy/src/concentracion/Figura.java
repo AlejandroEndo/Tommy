@@ -3,7 +3,7 @@ package concentracion;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class lvlUno {
+public class Figura {
 
 	private PApplet app;
 
@@ -30,7 +30,7 @@ public class lvlUno {
 
 	private boolean visible;
 
-	public lvlUno(PApplet app, float x, float y, int id, int selector) {
+	public Figura(PApplet app, float x, float y, int id, int selector) {
 		this.app = app;
 		this.x = x;
 		this.y = y;

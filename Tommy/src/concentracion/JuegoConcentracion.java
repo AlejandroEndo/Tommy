@@ -16,9 +16,11 @@ public class JuegoConcentracion extends Thread {
 	private PImage instrucicones;
 	private PImage puntaje;
 
-	private ArrayList<lvlUno> pandas = new ArrayList<>();
+	private ArrayList<Figura> lvlUno = new ArrayList<>();
+	private ArrayList<Figura> lvlDos = new ArrayList<>();
 
 	private int inicio;
+	private int lvl;
 
 	private int selector;
 
@@ -40,7 +42,10 @@ public class JuegoConcentracion extends Thread {
 		instrucicones = app.loadImage("../data/concentracionI.png");
 		puntaje = app.loadImage("../data/entrenamientoI.png");
 
+		lvl = 1;
+
 		loadlvlUno();
+		loadlvlDos();
 
 		iniciar = false;
 		guarde = false;
@@ -56,11 +61,16 @@ public class JuegoConcentracion extends Thread {
 					min++;
 					sec = 0;
 				}
+
 				if (iniciar) {
 					inicio++;
 					if (inicio >= 2) {
-						for (int i = 0; i < pandas.size(); i++) {
-							pandas.get(i).setVisible(true);
+						for (int i = 0; i < lvlUno.size(); i++) {
+							lvlUno.get(i).setVisible(true);
+							inicio = 0;
+						}
+						for (int i = 0; i < lvlDos.size(); i++) {
+							lvlDos.get(i).setVisible(true);
 							inicio = 0;
 						}
 					}
@@ -88,9 +98,16 @@ public class JuegoConcentracion extends Thread {
 				app.textSize(27);
 				app.text(reloj, 1138, 78);
 
-				for (int i = 0; i < pandas.size(); i++) {
-					lvlUno p = pandas.get(i);
-					p.draw();
+				if (lvl == 0) {
+					for (int i = 0; i < lvlUno.size(); i++) {
+						Figura p = lvlUno.get(i);
+						p.draw();
+					}
+				} else if (lvl == 1) {
+					for (int i = 0; i < lvlDos.size(); i++) {
+						Figura p = lvlDos.get(i);
+						p.draw();
+					}
 				}
 				app.textAlign(PConstants.RIGHT);
 				app.textSize(40);
@@ -110,9 +127,22 @@ public class JuegoConcentracion extends Thread {
 
 		for (int i = 0; i < 6; i++) {
 			if (i < 3)
-				pandas.add(new lvlUno(app, (216 + 50) * i + 340, app.height / 2 - 50, values[i], selector));
+				lvlUno.add(new Figura(app, (216 + 50) * i + 340, app.height / 2 - 50, values[i], selector));
 			else
-				pandas.add(new lvlUno(app, (216 + 50) * (i - 3) + 340, app.height / 2 + 170, values[i], selector));
+				lvlUno.add(new Figura(app, (216 + 50) * (i - 3) + 340, app.height / 2 + 170, values[i], selector));
+		}
+	}
+
+	private void loadlvlDos() {
+		int[] values = { 1, 0, 0, 0, 0, 0, 0, 0 };
+		shuffleArray(values);
+		selector = (int) app.random(4);
+
+		for (int i = 0; i < 8; i++) {
+			if (i < 4)
+				lvlDos.add(new Figura(app, (216 + 50) * i + 200, app.height / 2 - 50, values[i], selector));
+			else
+				lvlDos.add(new Figura(app, (216 + 50) * (i - 4) + 200, app.height / 2 + 170, values[i], selector));
 		}
 	}
 
@@ -122,11 +152,16 @@ public class JuegoConcentracion extends Thread {
 		sec = 0;
 		min = 0;
 		puntajeLocal = 0;
-		for (int i = 0; i < pandas.size(); i++) {
-			pandas.get(i).setVisible(false);
+		for (int i = 0; i < lvlUno.size(); i++) {
+			lvlUno.get(i).setVisible(false);
 		}
-		pandas.clear();
+		for (int i = 0; i < lvlUno.size(); i++) {
+			lvlUno.get(i).setVisible(false);
+		}
+		lvlUno.clear();
+		lvlDos.clear();
 		loadlvlUno();
+		loadlvlDos();
 	}
 
 	static void shuffleArray(int[] ar) {
@@ -142,17 +177,31 @@ public class JuegoConcentracion extends Thread {
 	public void click() {
 		if (puntajeLocal < 200) {
 			if (iniciar) {
-				for (int i = 0; i < pandas.size(); i++) {
-					lvlUno p = pandas.get(i);
+				for (int i = 0; i < lvlUno.size(); i++) {
+					Figura p = lvlUno.get(i);
 
 					if (PApplet.dist(p.getX(), p.getY(), app.mouseX, app.mouseY) < 100) {
 						if (p.getId() == 0) {
-							System.out.println("nonas mai");
+							// System.out.println("nonas mai");
 						} else {
 							puntajeLocal += 50;
-							pandas.clear();
+							lvlUno.clear();
 							loadlvlUno();
-							System.out.println("Sisas prro");
+							// System.out.println("Sisas prro");
+						}
+					}
+				}
+				for (int i = 0; i < lvlDos.size(); i++) {
+					Figura p = lvlDos.get(i);
+
+					if (PApplet.dist(p.getX(), p.getY(), app.mouseX, app.mouseY) < 100) {
+						if (p.getId() == 0) {
+							// System.out.println("nonas mai");
+						} else {
+							puntajeLocal += 50;
+							lvlDos.clear();
+							loadlvlDos();
+							// System.out.println("Sisas prro");
 						}
 					}
 				}
@@ -170,18 +219,26 @@ public class JuegoConcentracion extends Thread {
 		}
 	}
 	
+	public int getLvl() {
+		return lvl;
+	}
+	
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
+	}
+
 	public String getReloj() {
 		return reloj;
 	}
-	
+
 	public int getPuntajeLocal() {
 		return puntajeLocal;
 	}
-	
+
 	public void setPuntajeLocal(int puntajeLocal) {
 		this.puntajeLocal = puntajeLocal;
 	}
-	
+
 	public boolean isIniciar() {
 		return iniciar;
 	}
@@ -205,11 +262,11 @@ public class JuegoConcentracion extends Thread {
 	public void setMin(int min) {
 		this.min = min;
 	}
-	
+
 	public boolean isGuarde() {
 		return guarde;
 	}
-	
+
 	public void setGuarde(boolean guarde) {
 		this.guarde = guarde;
 	}

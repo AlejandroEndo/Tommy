@@ -67,10 +67,10 @@ public class Juego {
 	}
 
 	private void animacion() {
-		escalaCon = PApplet.map(concentracionP, 0, 1000, 0, 150);
-		escalaMem = PApplet.map(memoriaP, 0, 1000, 0, 150);
-		escalaMot = PApplet.map(motricidadP, 0, 1000, 0, 150);
-		escalaCom = PApplet.map(comunicacionP, 0, 1000, 0, 150);
+		escalaCon = PApplet.map(concentracionP, 0, 2000, 0, 150);
+		escalaMem = PApplet.map(memoriaP, 0, 2000, 0, 150);
+		escalaMot = PApplet.map(motricidadP, 0, 2000, 0, 150);
+		escalaCom = PApplet.map(comunicacionP, 0, 2000, 0, 150);
 		if (trans >= 100) {
 			if (tam[0] > -150) {
 				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -escalaCon, -escalaCon) * 0.02f;

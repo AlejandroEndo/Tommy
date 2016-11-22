@@ -57,7 +57,7 @@ public class BaseDeDatos {
 		memoria = lemao.getInt("memoria");
 		motricidad = lemao.getInt("motricidad");
 		comunicacion = lemao.getInt("comunicacion");
-		System.out.println(concentracion);
+		// System.out.println(concentracion);
 	}
 
 	public int getEntrenamiento() {

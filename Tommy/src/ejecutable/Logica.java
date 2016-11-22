@@ -72,7 +72,7 @@ public class Logica {
 		somatic = app.loadFont("../data/somatic.vlw");
 		app.textFont(somatic, 27);
 
-		pantalla = 0;
+		pantalla = 3;
 
 		datos = new BaseDeDatos("data" + File.separator + "BaseDeDatos.xml");
 		p = new Puntaje(datos.getEntrenamiento(), datos.getConcentracion(), datos.getMemoria(), datos.getMotricidad(),
