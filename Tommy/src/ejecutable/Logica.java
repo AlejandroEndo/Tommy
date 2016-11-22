@@ -72,7 +72,7 @@ public class Logica {
 		somatic = app.loadFont("../data/somatic.vlw");
 		app.textFont(somatic, 27);
 
-		pantalla = 3;
+		pantalla = 0;
 
 		datos = new BaseDeDatos("data" + File.separator + "BaseDeDatos.xml");
 		p = new Puntaje(datos.getEntrenamiento(), datos.getConcentracion(), datos.getMemoria(), datos.getMotricidad(),
@@ -308,24 +308,45 @@ public class Logica {
 				jConcentracion.setSec(0);
 				jConcentracion.setMin(0);
 				jConcentracion.reiniciar();
+				if (p.getConcentracion() >= 600) {
+					jConcentracion.setLvl(1);
+				} else {
+					jConcentracion.setLvl(0);
+				}
 				pantalla = 6;
 			}
 			if (PApplet.dist(app.mouseX, app.mouseY, 1015, 251) < 70) { // memoria
 				jMemoria.setSec(0);
 				jMemoria.setMin(0);
 				jMemoria.reiniciar();
+				if (p.getMemoria() >= 600) {
+					jMemoria.setLvl(1);
+				} else {
+					jMemoria.setLvl(0);
+				}
+
 				pantalla = 7;
 			}
 			if (PApplet.dist(app.mouseX, app.mouseY, 778, 445) < 70) { // motricidad
 				jMotricidad.setSec(0);
 				jMotricidad.setMin(0);
 				jMotricidad.reiniciar();
+				if (p.getMotricidad() >= 600) {
+					jMotricidad.setLvl(1);
+				} else {
+					jMotricidad.setLvl(0);
+				}
 				pantalla = 8;
 			}
 			if (PApplet.dist(app.mouseX, app.mouseY, 1015, 445) < 70) { // comunicacion
 				jComunicacion.setSec(0);
 				jComunicacion.setMin(0);
 				jComunicacion.reiniciar();
+				if (p.getComunicacion() >= 600) {
+					jComunicacion.setLvl(1);
+				} else {
+					jComunicacion.setLvl(0);
+				}
 				pantalla = 9;
 			}
 			break;

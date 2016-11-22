@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
+import sonido.Sonido;
 
 public class JuegoConcentracion extends Thread {
 
@@ -18,6 +19,8 @@ public class JuegoConcentracion extends Thread {
 
 	private ArrayList<Figura> lvlUno = new ArrayList<>();
 	private ArrayList<Figura> lvlDos = new ArrayList<>();
+
+	private Sonido s;
 
 	private int inicio;
 	private int lvl;
@@ -43,6 +46,8 @@ public class JuegoConcentracion extends Thread {
 		puntaje = app.loadImage("../data/entrenamientoI.png");
 
 		lvl = 1;
+
+		s = new Sonido(app);
 
 		loadlvlUno();
 		loadlvlDos();
@@ -182,11 +187,13 @@ public class JuegoConcentracion extends Thread {
 
 					if (PApplet.dist(p.getX(), p.getY(), app.mouseX, app.mouseY) < 100) {
 						if (p.getId() == 0) {
+							s.malo();
 							// System.out.println("nonas mai");
 						} else {
 							puntajeLocal += 50;
 							lvlUno.clear();
 							loadlvlUno();
+							s.bueno();
 							// System.out.println("Sisas prro");
 						}
 					}
@@ -218,11 +225,11 @@ public class JuegoConcentracion extends Thread {
 			}
 		}
 	}
-	
+
 	public int getLvl() {
 		return lvl;
 	}
-	
+
 	public void setLvl(int lvl) {
 		this.lvl = lvl;
 	}

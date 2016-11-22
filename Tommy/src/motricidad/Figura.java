@@ -45,9 +45,9 @@ public class Figura {
 		app.image(figuras[id], x, y);
 		app.noTint();
 
-		x += vel;
+		y += vel;
 
-		if (x < 70 || x > app.width - 70) {
+		if (y < 70 || y > app.height - 70) {
 			vel *= -1;
 		}
 	}

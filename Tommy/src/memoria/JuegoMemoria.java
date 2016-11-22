@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import sonido.Sonido;
 
 public class JuegoMemoria extends Thread {
 
@@ -33,6 +34,8 @@ public class JuegoMemoria extends Thread {
 
 	private Animal ua = null;
 	private Animal na = null;
+	
+	private Sonido s;
 
 	private int lvl;
 
@@ -60,6 +63,8 @@ public class JuegoMemoria extends Thread {
 		lvl = 0;
 
 		guarde = false;
+		
+		s = new Sonido(app);
 
 		loadFiguras();
 		loadAnimales();
@@ -200,9 +205,11 @@ public class JuegoMemoria extends Thread {
 			if (uf.getId() == nf.getId()) {
 				// System.out.println(puntajeLocal);
 				puntajeLocal += 20;
+				s.bueno();
 			} else {
 				uf.setVisible(false);
 				nf.setVisible(false);
+				s.malo();
 			}
 			uf = null;
 			nf = null;

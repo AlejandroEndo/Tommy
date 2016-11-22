@@ -8,6 +8,7 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
+import sonido.Sonido;
 
 public class JuegoComunicacion extends Thread {
 
@@ -23,6 +24,8 @@ public class JuegoComunicacion extends Thread {
 
 	private Comida comida;
 
+	private Sonido s;
+
 	private ArrayList<Comida> comidas = new ArrayList<>();
 	private ArrayList<Comida> comidatxt = new ArrayList<>();
 
@@ -32,9 +35,11 @@ public class JuegoComunicacion extends Thread {
 	private int puntajeLocal;
 	private int id;
 
+	private int lvl;
+
 	private boolean iniciar;
 	private boolean inicio;
-	
+
 	private boolean guarde;
 
 	private String reloj;
@@ -50,7 +55,10 @@ public class JuegoComunicacion extends Thread {
 		iniciar = false;
 		guarde = false;
 
+		lvl = 0;
+
 		comida = new Comida(app, 0, 0, id);
+		s = new Sonido(app);
 
 		loadComida();
 		start();
@@ -169,34 +177,58 @@ public class JuegoComunicacion extends Thread {
 						c.setX(300);
 						c.setY(438);
 						inicio = true;
+						s.bueno();
+					} else {
+						c.setX(pos[i].x);
+						c.setY(pos[i].y);
+						s.malo();
 					}
-				} else {
-					c.setX(pos[i].x);
-					c.setY(pos[i].y);
 				}
 			}
 		}
 	}
 
 	private void loadComida() {
-		int[] values = { 0, 1, 2, 3 };
-		id = (int) app.random(4);
-		comida.setId(id);
-		shuffleArray(values);
-		for (int i = 0; i < 4; i++) {
-			if (i < 2) {
-				comidas.add(new Comida(app, 300 * i + 750, 280, values[i]));
-			} else {
-				comidas.add(new Comida(app, 300 * (i - 2) + 750, 560, values[i]));
+		if (lvl == 0) {
+			int[] values = { 0, 1 };
+			id = (int) app.random(2);
+			comida.setId(id);
+			shuffleArray(values);
+			for (int i = 0; i < 2; i++) {
+				if (i == 0) {
+					comidas.add(new Comida(app, 900, 280, values[i]));
+				} else {
+					comidas.add(new Comida(app, 900, 560, values[i]));
+				}
 			}
-		}
 
-		for (int i = 0; i < comidas.size(); i++) {
-			pos[i] = new PVector(comidas.get(i).getX(), comidas.get(i).getY());
-		}
-		shuffleArray(values);
-		for (int i = 0; i < 4; i++) {
-			comidatxt.add(new Comida(app, 0, 0, values[i]));
+			for (int i = 0; i < comidas.size(); i++) {
+				pos[i] = new PVector(comidas.get(i).getX(), comidas.get(i).getY());
+			}
+			shuffleArray(values);
+			for (int i = 0; i < 2; i++) {
+				comidatxt.add(new Comida(app, 0, 0, values[i]));
+			}
+		} else {
+			int[] values = { 0, 1, 2, 3 };
+			id = (int) app.random(4);
+			comida.setId(id);
+			shuffleArray(values);
+			for (int i = 0; i < 4; i++) {
+				if (i < 2) {
+					comidas.add(new Comida(app, 300 * i + 750, 280, values[i]));
+				} else {
+					comidas.add(new Comida(app, 300 * (i - 2) + 750, 560, values[i]));
+				}
+			}
+
+			for (int i = 0; i < comidas.size(); i++) {
+				pos[i] = new PVector(comidas.get(i).getX(), comidas.get(i).getY());
+			}
+			shuffleArray(values);
+			for (int i = 0; i < 4; i++) {
+				comidatxt.add(new Comida(app, 0, 0, values[i]));
+			}
 		}
 	}
 
@@ -209,23 +241,23 @@ public class JuegoComunicacion extends Thread {
 			ar[i] = a;
 		}
 	}
-	
+
 	public String getReloj() {
 		return reloj;
 	}
-	
+
 	public boolean isGuarde() {
 		return guarde;
 	}
-	
+
 	public void setGuarde(boolean guarde) {
 		this.guarde = guarde;
 	}
-	
+
 	public void setSec(int sec) {
 		this.sec = sec;
 	}
-	
+
 	public void setMin(int min) {
 		this.min = min;
 	}
@@ -244,5 +276,13 @@ public class JuegoComunicacion extends Thread {
 
 	public void setPuntajeLocal(int puntajeLocal) {
 		this.puntajeLocal = puntajeLocal;
+	}
+
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
+	}
+
+	public int getLvl() {
+		return lvl;
 	}
 }
