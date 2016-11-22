@@ -88,7 +88,6 @@ public class JuegoConcentracion extends Thread {
 
 				for (int i = 0; i < pandas.size(); i++) {
 					lvlUno p = pandas.get(i);
-
 					p.draw();
 				}
 				app.textAlign(PConstants.RIGHT);
@@ -124,6 +123,8 @@ public class JuegoConcentracion extends Thread {
 		for (int i = 0; i < pandas.size(); i++) {
 			pandas.get(i).setVisible(false);
 		}
+		pandas.clear();
+		loadlvlUno();
 	}
 
 	static void shuffleArray(int[] ar) {

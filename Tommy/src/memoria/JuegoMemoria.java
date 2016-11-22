@@ -13,6 +13,8 @@ public class JuegoMemoria extends Thread {
 	private PApplet app;
 
 	private PImage fondo;
+	private PImage memoriaI;
+	private PImage puntaje;
 
 	private ArrayList<Figura> figurasA = new ArrayList<>();
 	private ArrayList<Figura> figurasB = new ArrayList<>();
@@ -37,15 +39,22 @@ public class JuegoMemoria extends Thread {
 	private int sec;
 	private int min;
 
+	private int puntajeLocal;
+
 	private String reloj;
+	private String nuevoReloj;
 
 	private boolean valideFigura;
 	private boolean valideAnimal;
+
+	private boolean iniciar;
 
 	public JuegoMemoria(PApplet app) {
 		this.app = app;
 
 		fondo = app.loadImage("../data/memoriaFondo.png");
+		memoriaI = app.loadImage("../data/memoriaI.png");
+		puntaje = app.loadImage("../data/entrenamientoI.png");
 
 		lvl = 1;
 
@@ -120,40 +129,67 @@ public class JuegoMemoria extends Thread {
 		}
 	}
 
-	public void draw() {
-		if (sec < 10) {
-			reloj = "0" + min + ":0" + sec;
-		} else {
-			reloj = "0" + min + ":" + sec;
+	public void reiniciar() {
+		iniciar = false;
+		sec = 0;
+		min = 0;
+		puntajeLocal = 0;
+		for (int i = 0; i < animalesA.size(); i++) {
+			animalesA.get(i).setVisible(false);
+			animalesB.get(i).setVisible(false);
 		}
+		animalesA.clear();
+		animalesB.clear();
+		loadAnimales();
+	}
 
-		app.image(fondo, app.width / 2, app.height / 2);
-		app.text(reloj, 1138, 78);
+	public void draw() {
+		if (puntajeLocal == 80) {
+			app.image(puntaje, app.width / 2, app.height / 2);
+			app.text(nuevoReloj, 900, 246);
+			app.text(puntajeLocal, 900, 410);
+		} else {
+			if (iniciar) {
+				if (sec < 10) {
+					reloj = "0" + min + ":0" + sec;
+				} else {
+					reloj = "0" + min + ":" + sec;
+				}
 
-		validacionFigura();
-		validacionAnimal();
+				app.image(fondo, app.width / 2, app.height / 2);
+				app.textSize(27);
+				app.text(reloj, 1138, 78);
 
-		switch (lvl) {
-		case 0:
-			for (int i = 0; i < 3; i++) {
-				figurasA.get(i).draw();
-				figurasB.get(i).draw();
+				validacionFigura();
+				validacionAnimal();
+
+				nuevoReloj = reloj;
+				switch (lvl) {
+				case 0:
+					for (int i = 0; i < 3; i++) {
+						figurasA.get(i).draw();
+						figurasB.get(i).draw();
+					}
+					break;
+
+				case 1:
+					for (int i = 0; i < 4; i++) {
+						animalesA.get(i).draw();
+						animalesB.get(i).draw();
+					}
+					break;
+				}
+			} else {
+				app.image(memoriaI, app.width / 2, app.height / 2);
 			}
-			break;
-
-		case 1:
-			for (int i = 0; i < 4; i++) {
-				animalesA.get(i).draw();
-				animalesB.get(i).draw();
-			}
-			break;
 		}
 	}
 
 	private void validacionFigura() {
 		if (valideFigura) {
 			if (uf.getId() == nf.getId()) {
-				System.out.println("en la buena prro");
+				System.out.println(puntajeLocal);
+				puntajeLocal += 20;
 			} else {
 				uf.setVisible(false);
 				nf.setVisible(false);
@@ -167,7 +203,8 @@ public class JuegoMemoria extends Thread {
 	private void validacionAnimal() {
 		if (valideAnimal) {
 			if (ua.getId() == na.getId()) {
-				System.out.println("en la buena prro");
+				System.out.println(puntajeLocal);
+				puntajeLocal += 20;
 			} else {
 				ua.setVisible(false);
 				na.setVisible(false);
@@ -179,73 +216,101 @@ public class JuegoMemoria extends Thread {
 	}
 
 	public void click() {
-		switch (lvl) {
+		if (puntajeLocal < 80) {
+			if (iniciar) {
+				switch (lvl) {
+				case 0:
+					for (int i = 0; i < figurasA.size(); i++) {
+						for (int j = 0; j < figurasB.size(); j++) {
+							Figura a = figurasA.get(i);
+							Figura b = figurasB.get(j);
 
-		case 0:
-			for (int i = 0; i < figurasA.size(); i++) {
-				for (int j = 0; j < figurasB.size(); j++) {
-					Figura a = figurasA.get(i);
-					Figura b = figurasB.get(j);
-
-					if (uf == null || nf == null) {
-						if (PApplet.dist(app.mouseX, app.mouseY, a.getX(), a.getY()) < 100) {
-							if (!a.isVisible()) {
-								a.setVisible(true);
-								if (uf == null) {
-									uf = a;
-								} else if (nf == null) {
-									nf = a;
+							if (uf == null || nf == null) {
+								if (PApplet.dist(app.mouseX, app.mouseY, a.getX(), a.getY()) < 100) {
+									if (!a.isVisible()) {
+										a.setVisible(true);
+										if (uf == null) {
+											uf = a;
+										} else if (nf == null) {
+											nf = a;
+										}
+									}
 								}
-							}
-						}
 
-						if (PApplet.dist(app.mouseX, app.mouseY, b.getX(), b.getY()) < 100) {
-							if (!b.isVisible()) {
-								b.setVisible(true);
-								if (uf == null) {
-									uf = b;
-								} else if (nf == null) {
-									nf = b;
-								}
-							}
-						}
-					}
-				}
-			}
-			break;
-
-		case 1:
-			for (int i = 0; i < animalesA.size(); i++) {
-				for (int j = 0; j < animalesB.size(); j++) {
-					Animal a = animalesA.get(i);
-					Animal b = animalesB.get(j);
-
-					if (ua == null || na == null) {
-						if (PApplet.dist(app.mouseX, app.mouseY, a.getX(), a.getY()) < 100) {
-							if (!a.isVisible()) {
-								a.setVisible(true);
-								if (ua == null) {
-									ua = a;
-								} else if (na == null) {
-									na = a;
-								}
-							}
-						}
-
-						if (PApplet.dist(app.mouseX, app.mouseY, b.getX(), b.getY()) < 100) {
-							if (!b.isVisible()) {
-								b.setVisible(true);
-								if (ua == null) {
-									ua = b;
-								} else if (na == null) {
-									na = b;
+								if (PApplet.dist(app.mouseX, app.mouseY, b.getX(), b.getY()) < 100) {
+									if (!b.isVisible()) {
+										b.setVisible(true);
+										if (uf == null) {
+											uf = b;
+										} else if (nf == null) {
+											nf = b;
+										}
+									}
 								}
 							}
 						}
 					}
+					break;
+
+				case 1:
+					for (int i = 0; i < animalesA.size(); i++) {
+						for (int j = 0; j < animalesB.size(); j++) {
+							Animal a = animalesA.get(i);
+							Animal b = animalesB.get(j);
+
+							if (ua == null || na == null) {
+								if (PApplet.dist(app.mouseX, app.mouseY, a.getX(), a.getY()) < 100) {
+									if (!a.isVisible()) {
+										a.setVisible(true);
+										if (ua == null) {
+											ua = a;
+										} else if (na == null) {
+											na = a;
+										}
+									}
+								}
+
+								if (PApplet.dist(app.mouseX, app.mouseY, b.getX(), b.getY()) < 100) {
+									if (!b.isVisible()) {
+										b.setVisible(true);
+										if (ua == null) {
+											ua = b;
+										} else if (na == null) {
+											na = b;
+										}
+									}
+								}
+							}
+						}
+					}
+					break;
+				}
+			} else {
+				if (app.mouseX > 947 && app.mouseX < 1145 && app.mouseY > 590 && app.mouseY < 660) {
+					iniciar = true;
 				}
 			}
-			break;
+		} else {
+			if (app.mouseX > 800 && app.mouseX < 996 && app.mouseY > 537 && app.mouseY < 610) {
+				puntajeLocal = 0;
+				reiniciar();
+			}
 		}
+	}
+
+	public int getPuntajeLocal() {
+		return puntajeLocal;
+	}
+
+	public void setPuntajeLocal(int puntajeLocal) {
+		this.puntajeLocal = puntajeLocal;
+	}
+
+	public boolean isIniciar() {
+		return iniciar;
+	}
+
+	public void setIniciar(boolean iniciar) {
+		this.iniciar = iniciar;
 	}
 }
