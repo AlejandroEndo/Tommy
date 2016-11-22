@@ -147,7 +147,7 @@ public class JuegoConcentracion extends Thread {
 						if (p.getId() == 0) {
 							System.out.println("nonas mai");
 						} else {
-							puntajeLocal += 20;
+							puntajeLocal += 50;
 							pandas.clear();
 							loadlvlUno();
 							System.out.println("Sisas prro");

@@ -6,6 +6,7 @@ import almacenamiento.BaseDeDatos;
 import almacenamiento.Puntaje;
 import comunicacion.JuegoComunicacion;
 import concentracion.JuegoConcentracion;
+import entrenamiento.Entrenamiento;
 import memoria.JuegoMemoria;
 import menu.Home;
 import menu.Inicio;
@@ -34,6 +35,7 @@ public class Logica {
 	private Home home;
 	private Juego juego;
 	private Puntos puntos;
+	private Entrenamiento entrenamiento;
 	// -----------------------------
 
 	// JUEGOS-------------------------------------
@@ -69,7 +71,7 @@ public class Logica {
 		somatic = app.loadFont("../data/somatic.vlw");
 		app.textFont(somatic, 27);
 
-		pantalla = 1;
+		pantalla = 0;
 
 		datos = new BaseDeDatos("data" + File.separator + "BaseDeDatos.xml");
 		p = new Puntaje(datos.getEntrenamiento(), datos.getConcentracion(), datos.getMemoria(), datos.getMotricidad(),
@@ -87,6 +89,7 @@ public class Logica {
 		home = new Home(app);
 		juego = new Juego(app);
 		puntos = new Puntos(app);
+		entrenamiento = new Entrenamiento(app);
 		// -------------------------------
 
 		// MOUSE INICIALIZACiON ------------
@@ -128,6 +131,16 @@ public class Logica {
 			break;
 
 		case 2: // Entrenate
+			entrenamiento.draw();
+			if (entrenamiento.isFinalizado()) {
+				pantalla = 1;
+			}
+			if (menuAntes) {
+				app.image(menuJuegos, app.width / 2, app.height / 2);
+			}
+			if (menuDespues) {
+				app.image(menuJuegosReiniciar, app.width / 2, app.height / 2);
+			}
 			home.setTam(reinicio);
 			break;
 
@@ -143,6 +156,11 @@ public class Logica {
 		case 4: // Puntos
 			home.setTam(reinicio);
 			puntos.draw();
+			app.textSize(27);
+			app.text(p.getConcentracion(), 542, 362);
+			app.text(p.getMemoria(), 653, 362);
+			app.text(p.getMotricidad(), 542, 525);
+			app.text(p.getComunicacion(), 653, 525);
 			if (menu) {
 				app.image(borrarPuntos, app.width / 2, app.height / 2);
 			}
@@ -205,6 +223,8 @@ public class Logica {
 		case 1:
 			if (PApplet.dist(app.mouseX, app.mouseY, 778, 251) < 70) { // entrenate
 				pantalla = 2;
+				entrenamiento.setFinalizado(false);
+				entrenamiento.reiniciar();
 			}
 			if (PApplet.dist(app.mouseX, app.mouseY, 1015, 251) < 70) { // Juegos
 				pantalla = 3;
@@ -218,7 +238,47 @@ public class Logica {
 			break;
 
 		case 2: // entrenate
+			if (!menuAntes && !menuDespues)
+				entrenamiento.click();
 
+			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
+				if (!entrenamiento.isIniciar())
+					menuAntes = true;
+				else
+					menuDespues = true;
+			}
+
+			if (menuAntes) {
+				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					pantalla = 1;
+					menuAntes = false;
+				}
+				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					pantalla = 3;
+					menuAntes = false;
+				}
+				if (PApplet.dist(862, 211, app.mouseX, app.mouseY) < 30) {
+					menuAntes = false;
+				}
+			}
+			if (menuDespues) {
+				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					pantalla = 1;
+					menuDespues = false;
+				}
+				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					pantalla = 3;
+					menuDespues = false;
+				}
+				if (app.mouseX > 490 && app.mouseX < 710 && app.mouseY > 407 && app.mouseY < 473) {
+					entrenamiento.reiniciar();
+					menuDespues = false;
+				}
+				if (PApplet.dist(862, 182, app.mouseX, app.mouseY) < 30) {
+					menuDespues = false;
+				}
+
+			}
 			break;
 
 		case 3: // juegos
@@ -453,6 +513,10 @@ public class Logica {
 
 	public void drag() {
 		switch (pantalla) {
+		case 2:
+			entrenamiento.drag();
+			break;
+
 		case 9:
 			jComunicacion.drag();
 			break;
@@ -461,6 +525,10 @@ public class Logica {
 
 	public void ress() {
 		switch (pantalla) {
+		case 2:
+			entrenamiento.res();
+			break;
+
 		case 9:
 			jComunicacion.res();
 			break;

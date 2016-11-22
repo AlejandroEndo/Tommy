@@ -140,11 +140,18 @@ public class JuegoMemoria extends Thread {
 		}
 		animalesA.clear();
 		animalesB.clear();
+		for (int i = 0; i < figurasA.size(); i++) {
+			figurasA.get(i).setVisible(false);
+			figurasB.get(i).setVisible(false);
+		}
+		figurasA.clear();
+		figurasB.clear();
 		loadAnimales();
+		loadFiguras();
 	}
 
 	public void draw() {
-		if (puntajeLocal == 80) {
+		if ((puntajeLocal == 60 && lvl == 0) || (puntajeLocal == 80 && lvl == 1)) {
 			app.image(puntaje, app.width / 2, app.height / 2);
 			app.text(nuevoReloj, 900, 246);
 			app.text(puntajeLocal, 900, 410);
@@ -216,7 +223,7 @@ public class JuegoMemoria extends Thread {
 	}
 
 	public void click() {
-		if (puntajeLocal < 80) {
+		if ((puntajeLocal < 60 && lvl == 0) || (puntajeLocal < 80 && lvl == 1)) {
 			if (iniciar) {
 				switch (lvl) {
 				case 0:
@@ -296,6 +303,14 @@ public class JuegoMemoria extends Thread {
 				reiniciar();
 			}
 		}
+	}
+
+	public int getLvl() {
+		return lvl;
+	}
+
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
 	}
 
 	public int getPuntajeLocal() {

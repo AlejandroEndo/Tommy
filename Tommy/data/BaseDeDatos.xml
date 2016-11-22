@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <datos>
-  <dato comunicacion="100" concentracion="100" entrenamiento="100" memoria="100" motricidad="100"/>
+  <dato comunicacion="0" concentracion="0" entrenamiento="0" memoria="0" motricidad="0"/>
 </datos>
