@@ -8,7 +8,7 @@ public class Comida {
 	private PApplet app;
 
 	private PImage[] comida = new PImage[4];
-	private String[] comidas = { "Helado", "Dulce", "Bombom", "Dona" };
+	private String[] comidas = { "Helado", "Perro", "Bombom", "Dona" };
 
 	private float x;
 	private float y;
@@ -22,7 +22,7 @@ public class Comida {
 		this.id = id;
 
 		comida[0] = app.loadImage("../data/cohelado.png");
-		comida[1] = app.loadImage("../data/cocandy.png");
+		comida[1] = app.loadImage("../data/coperro.png");
 		comida[2] = app.loadImage("../data/cobombom.png");
 		comida[3] = app.loadImage("../data/codona.png");
 	}
