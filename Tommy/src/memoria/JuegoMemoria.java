@@ -56,7 +56,7 @@ public class JuegoMemoria extends Thread {
 		memoriaI = app.loadImage("../data/memoriaI.png");
 		puntaje = app.loadImage("../data/entrenamientoI.png");
 
-		lvl = 1;
+		lvl = 0;
 
 		loadFiguras();
 		loadAnimales();

@@ -452,7 +452,7 @@ public class Logica {
 	}
 
 	public void drag() {
-		switch(pantalla){
+		switch (pantalla) {
 		case 9:
 			jComunicacion.drag();
 			break;
@@ -460,7 +460,7 @@ public class Logica {
 	}
 
 	public void ress() {
-		switch(pantalla){
+		switch (pantalla) {
 		case 9:
 			jComunicacion.res();
 			break;

@@ -21,6 +21,8 @@ public class JuegoComunicacion extends Thread {
 
 	private Object o = null;
 
+	private Comida comida;
+
 	private ArrayList<Comida> comidas = new ArrayList<>();
 	private ArrayList<Comida> comidatxt = new ArrayList<>();
 
@@ -31,6 +33,7 @@ public class JuegoComunicacion extends Thread {
 	private int id;
 
 	private boolean iniciar;
+	private boolean inicio;
 
 	private String reloj;
 	private String nuevoReloj;
@@ -44,6 +47,8 @@ public class JuegoComunicacion extends Thread {
 
 		iniciar = false;
 
+		comida = new Comida(app, 0, 0, id);
+
 		loadComida();
 		start();
 	}
@@ -56,6 +61,11 @@ public class JuegoComunicacion extends Thread {
 				if (sec >= 60) {
 					min++;
 					sec = 0;
+				}
+				if (inicio) {
+					comidas.clear();
+					loadComida();
+					inicio = false;
 				}
 				sleep(1000);
 			} catch (Exception e) {
@@ -85,7 +95,7 @@ public class JuegoComunicacion extends Thread {
 					comidas.get(i).draw();
 				}
 
-				comidatxt.get(id).texto();
+				comida.texto();
 
 				app.textAlign(PConstants.RIGHT);
 				app.textSize(40);
@@ -130,7 +140,6 @@ public class JuegoComunicacion extends Thread {
 			}
 		} else {
 			if (app.mouseX > 800 && app.mouseX < 996 && app.mouseY > 537 && app.mouseY < 610) {
-				puntajeLocal = 0;
 				reiniciar();
 			}
 		}
@@ -146,18 +155,21 @@ public class JuegoComunicacion extends Thread {
 	public void res() {
 		if (o != null) {
 			o = null;
-		}
 
-		for (int i = 0; i < comidas.size(); i++) {
-			Comida c = comidas.get(i);
+			for (int i = 0; i < comidas.size(); i++) {
+				Comida c = comidas.get(i);
 
-			if (PApplet.dist(c.getX(), c.getY(), 300, 420) < 80) {
-				if (c.getId() == id) {
-					puntajeLocal += 50;
+				if (PApplet.dist(c.getX(), c.getY(), 300, 420) < 80) {
+					if (c.getId() == comida.getId()) {
+						puntajeLocal += 50;
+						c.setX(300);
+						c.setY(438);
+						inicio = true;
+					}
+				} else {
+					c.setX(pos[i].x);
+					c.setY(pos[i].y);
 				}
-			} else {
-				c.setX(pos[i].x);
-				c.setY(pos[i].y);
 			}
 		}
 	}
@@ -165,6 +177,7 @@ public class JuegoComunicacion extends Thread {
 	private void loadComida() {
 		int[] values = { 0, 1, 2, 3 };
 		id = (int) app.random(4);
+		comida.setId(id);
 		shuffleArray(values);
 		for (int i = 0; i < 4; i++) {
 			if (i < 2) {
