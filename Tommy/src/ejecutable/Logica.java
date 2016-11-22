@@ -4,6 +4,7 @@ import java.io.File;
 
 import almacenamiento.BaseDeDatos;
 import almacenamiento.Puntaje;
+import comunicacion.JuegoComunicacion;
 import concentracion.JuegoConcentracion;
 import memoria.JuegoMemoria;
 import menu.Home;
@@ -39,6 +40,7 @@ public class Logica {
 	private JuegoConcentracion jConcentracion;
 	private JuegoMemoria jMemoria;
 	private JuegoMotricidad jMotricidad;
+	private JuegoComunicacion jComunicacion;
 	// --------------------------------------------
 
 	private int pantalla;
@@ -77,6 +79,7 @@ public class Logica {
 		jConcentracion = new JuegoConcentracion(app); // ID = 6
 		jMemoria = new JuegoMemoria(app); // ID = 7
 		jMotricidad = new JuegoMotricidad(app); // ID = 8
+		jComunicacion = new JuegoComunicacion(app); // ID = 9
 		// -----------------------------------------
 
 		// PANTALLAS INICIALIZACION ------
@@ -184,6 +187,13 @@ public class Logica {
 			break;
 
 		case 9: // Comunicacion
+			jComunicacion.draw();
+			if (menuAntes) {
+				app.image(menuJuegos, app.width / 2, app.height / 2);
+			}
+			if (menuDespues) {
+				app.image(menuJuegosReiniciar, app.width / 2, app.height / 2);
+			}
 			home.setTam(reinicio);
 			break;
 		}
@@ -387,7 +397,47 @@ public class Logica {
 			break;
 
 		case 9: // comunicacion
+			if (!menuAntes && !menuDespues)
+				jComunicacion.click();
 
+			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
+				if (!jComunicacion.isIniciar() || jComunicacion.getPuntajeLocal() == 200)
+					menuAntes = true;
+				else
+					menuDespues = true;
+			}
+
+			if (menuAntes) {
+				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					pantalla = 1;
+					menuAntes = false;
+				}
+				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					pantalla = 3;
+					menuAntes = false;
+				}
+				if (PApplet.dist(862, 211, app.mouseX, app.mouseY) < 30) {
+					menuAntes = false;
+				}
+			}
+			if (menuDespues) {
+				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					pantalla = 1;
+					menuDespues = false;
+				}
+				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					pantalla = 3;
+					menuDespues = false;
+				}
+				if (app.mouseX > 490 && app.mouseX < 710 && app.mouseY > 407 && app.mouseY < 473) {
+					jComunicacion.reiniciar();
+					menuDespues = false;
+				}
+				if (PApplet.dist(862, 182, app.mouseX, app.mouseY) < 30) {
+					menuDespues = false;
+				}
+
+			}
 			break;
 		}
 	}
@@ -402,9 +452,19 @@ public class Logica {
 	}
 
 	public void drag() {
+		switch(pantalla){
+		case 9:
+			jComunicacion.drag();
+			break;
+		}
 	}
 
 	public void ress() {
+		switch(pantalla){
+		case 9:
+			jComunicacion.res();
+			break;
+		}
 	}
 
 }

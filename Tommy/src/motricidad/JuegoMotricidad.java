@@ -18,7 +18,6 @@ public class JuegoMotricidad extends Thread {
 
 	private ArrayList<Figura> figuras = new ArrayList<>();
 
-	private int inicio;
 	private int sec;
 	private int min;
 
@@ -125,7 +124,6 @@ public class JuegoMotricidad extends Thread {
 
 	public void reiniciar() {
 		iniciar = false;
-		inicio = 0;
 		sec = 0;
 		min = 0;
 		puntajeLocal = 0;
