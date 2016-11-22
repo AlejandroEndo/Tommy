@@ -5,6 +5,7 @@ import java.io.File;
 import almacenamiento.BaseDeDatos;
 import almacenamiento.Puntaje;
 import concentracion.JuegoConcentracion;
+import memoria.JuegoMemoria;
 import menu.Home;
 import menu.Inicio;
 import menu.Juego;
@@ -35,15 +36,26 @@ public class Logica {
 
 	// JUEGOS-------------------------------------
 	private JuegoConcentracion jConcentracion;
+	private JuegoMemoria jMemoria;
 	// --------------------------------------------
 
 	private int pantalla;
 
 	// MOUSE -------------------
-	private boolean mouse;
 	private PImage a;
-	private PImage b;
 	// --------------------------
+
+	// MENUS ----------------------------
+	private PImage borrarPuntos;
+	private PImage deseaContinuar;
+	private PImage menuJuegos;
+	private PImage menuJuegosReiniciar;
+	private PImage about;
+
+	private boolean menu;
+	private boolean menuAntes;
+	private boolean menuDespues;
+	// -----------------------------------
 
 	private float[] reinicio = { 0, 0, 0, 0 };
 
@@ -53,7 +65,7 @@ public class Logica {
 		somatic = app.loadFont("../data/somatic.vlw");
 		app.textFont(somatic, 27);
 
-		pantalla = 6;
+		pantalla = 1;
 
 		datos = new BaseDeDatos("data" + File.separator + "BaseDeDatos.xml");
 		p = new Puntaje(datos.getEntrenamiento(), datos.getConcentracion(), datos.getMemoria(), datos.getMotricidad(),
@@ -61,6 +73,7 @@ public class Logica {
 
 		// JUEGOS INICIALIZACION ------------------
 		jConcentracion = new JuegoConcentracion(app); // ID = 6
+		jMemoria = new JuegoMemoria(app); // ID = 7
 		// -----------------------------------------
 
 		// PANTALLAS INICIALIZACION ------
@@ -71,20 +84,24 @@ public class Logica {
 		// -------------------------------
 
 		// MOUSE INICIALIZACiON ------------
-		mouse = true;
 		a = app.loadImage("../data/a.png");
-		b = app.loadImage("../data/b.png");
 		// ----------------------------------
 
+		// MENUS INICIALIZACION -----------------------------------
+		borrarPuntos = app.loadImage("../data/borrarPuntos.png");
+		deseaContinuar = app.loadImage("../data/deseaContinuar.png");
+		menuJuegos = app.loadImage("../data/menuJuegos.png");
+		menuJuegosReiniciar = app.loadImage("../data/menuJuegosReiniciar.png");
+		about = app.loadImage("../data/about.png");
+
+		menu = false;
+		menuAntes = false;
+		menuDespues = false;
+		// --------------------------------------------------------
 	}
 
 	public void draw() {
-		if (mouse) {
-			app.cursor(PConstants.ARROW);
-		} else {
-			app.cursor(PConstants.HAND);
-		}
-		// System.out.println(app.mouseX + " " + app.mouseY);
+		app.cursor(a, 0, 0);
 		switch (pantalla) {
 
 		case 0: // Inicio, no hay interaccion
@@ -118,16 +135,26 @@ public class Logica {
 			break;
 
 		case 4: // Puntos
-			puntos.draw();
 			home.setTam(reinicio);
+			puntos.draw();
+			if (menu) {
+				app.image(borrarPuntos, app.width / 2, app.height / 2);
+			}
 			break;
 
 		case 5: // Informacion
+			app.image(about, app.width / 2, app.height / 2);
 			home.setTam(reinicio);
 			break;
 
 		case 6: // Concentracion
 			jConcentracion.draw();
+			if (menuAntes) {
+				app.image(menuJuegos, app.width / 2, app.height / 2);
+			}
+			if (menuDespues) {
+				app.image(menuJuegosReiniciar, app.width / 2, app.height / 2);
+			}
 			home.setTam(reinicio);
 			break;
 
@@ -187,18 +214,71 @@ public class Logica {
 			break;
 
 		case 4: // puntos
-			if (app.mouseX > 515 && app.mouseX < 685 && app.mouseY > 620 && app.mouseY < 662)
-				datos.agregarDato(new Puntaje(0, 0, 0, 0, 0));
-			if (PApplet.dist(65, 65, app.mouseX, app.mouseX) < 50)
+			if (menu) {
+				if (app.mouseX > 433 && app.mouseX < 529 && app.mouseY > 419 && app.mouseY < 462) {
+					datos.agregarDato(new Puntaje(0, 0, 0, 0, 0));
+					menu = false;
+				}
+				if (app.mouseX > 664 && app.mouseX < 764 && app.mouseY > 419 && app.mouseY < 462) {
+					menu = false;
+				}
+			}
+			if (app.mouseX > 515 && app.mouseX < 685 && app.mouseY > 620 && app.mouseY < 662) {
+				menu = true;
+			}
+			if (PApplet.dist(65, 65, app.mouseX, app.mouseX) < 50) {
 				pantalla = 1;
+			}
 			break;
 
 		case 5: // informacion
-
+			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
+				pantalla = 1;
+			}
 			break;
 
 		case 6: // concentracion
-			jConcentracion.click();
+			if (!menuAntes && !menuDespues)
+				jConcentracion.click();
+
+			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
+				if (!jConcentracion.isIniciar() || jConcentracion.getPuntajeLocal() == 200)
+					menuAntes = true;
+				else
+					menuDespues = true;
+			}
+
+			if (menuAntes) {
+				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 254 && app.mouseY < 325) {
+					pantalla = 1;
+					menuAntes = false;
+				}
+				if (app.mouseX > 503 && app.mouseX < 695 && app.mouseY > 370 && app.mouseY < 443) {
+					pantalla = 3;
+					menuAntes = false;
+				}
+				if (PApplet.dist(862, 211, app.mouseX, app.mouseY) < 30) {
+					menuAntes = false;
+				}
+			}
+			if (menuDespues) {
+				if (app.mouseX > 512 && app.mouseX < 682 && app.mouseY > 218 && app.mouseY < 287) {
+					pantalla =1;
+					menuDespues = false;
+				}
+				if (app.mouseX > 501 && app.mouseX < 697 && app.mouseY > 315 && app.mouseY < 382) {
+					pantalla = 3;
+					menuDespues = false;
+				}
+				if (app.mouseX > 490 && app.mouseX < 710 && app.mouseY > 407 && app.mouseY < 473) {
+					jConcentracion.reiniciar();
+					menuDespues = false;
+				}
+				if (PApplet.dist(862, 182, app.mouseX, app.mouseY) < 30) {
+					menuDespues = false;
+				}
+
+			}
 			break;
 
 		case 7: // memoria
@@ -229,4 +309,5 @@ public class Logica {
 
 	public void ress() {
 	}
+
 }

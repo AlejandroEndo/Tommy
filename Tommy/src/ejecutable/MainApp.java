@@ -31,7 +31,6 @@ public class MainApp extends PApplet {
 	public void draw() {
 		if (frameRate % 60 == 0)
 			println("FPS: " + frameRate);
-		// println(mouseX, mouseY);
 		background(360);
 		logica.draw();
 	}
@@ -39,6 +38,7 @@ public class MainApp extends PApplet {
 	@Override
 	public void mousePressed() {
 		logica.click();
+		println(mouseX, mouseY);
 	}
 
 	@Override
