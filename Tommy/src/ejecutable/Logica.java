@@ -57,6 +57,7 @@ public class Logica {
 	private PImage menuJuegos;
 	private PImage menuJuegosReiniciar;
 	private PImage about;
+	private PImage casa;
 
 	private boolean menu;
 	private boolean menuAntes;
@@ -102,6 +103,7 @@ public class Logica {
 		menuJuegos = app.loadImage("../data/menuJuegos.png");
 		menuJuegosReiniciar = app.loadImage("../data/menuJuegosReiniciar.png");
 		about = app.loadImage("../data/about.png");
+		casa = app.loadImage("../data/casa.png");
 
 		menu = false;
 		menuAntes = false;
@@ -150,6 +152,7 @@ public class Logica {
 			juego.setMemoriaP(p.getMemoria());
 			juego.setMotricidadP(p.getMotricidad());
 			juego.draw();
+			app.image(casa, app.width / 2, app.height / 2);
 			home.setTam(reinicio);
 			break;
 
@@ -237,7 +240,7 @@ public class Logica {
 			break;
 
 		case 2: // entrenate
-			if (!menuAntes && !menuDespues){
+			if (!menuAntes && !menuDespues) {
 				entrenamiento.click();
 				if (entrenamiento.isGuarde()) {
 					p.setEntrenamiento(p.getEntrenamiento() + entrenamiento.getPuntajeLocal());
@@ -296,6 +299,10 @@ public class Logica {
 
 		case 3: // juegos
 			juego.click();
+
+			if (PApplet.dist(65, 65, app.mouseX, app.mouseY) < 50) {
+				pantalla = 1;
+			}
 
 			if (PApplet.dist(app.mouseX, app.mouseY, 778, 251) < 70) { // concentracion
 				jConcentracion.setSec(0);

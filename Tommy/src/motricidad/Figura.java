@@ -12,6 +12,7 @@ public class Figura {
 	private float h;
 	private float x;
 	private float y;
+	private float vel;
 
 	private int id;
 	private int s;
@@ -25,6 +26,12 @@ public class Figura {
 
 		h = app.random(360);
 
+		if (x < app.width / 2) {
+			vel = -1;
+		} else {
+			vel = 1;
+		}
+
 		figuras[0] = app.loadImage("../data/mocarro.png");
 		figuras[1] = app.loadImage("../data/mohelado.png");
 		figuras[2] = app.loadImage("../data/mojirafa.png");
@@ -37,6 +44,12 @@ public class Figura {
 		}
 		app.image(figuras[id], x, y);
 		app.noTint();
+
+		x += vel;
+
+		if (x < 70 || x > app.width - 70) {
+			vel *= -1;
+		}
 	}
 
 	public float getH() {

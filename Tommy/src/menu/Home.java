@@ -66,7 +66,7 @@ public class Home {
 
 	private void animacion() {
 		escalaE = PApplet.map(entrenamiento, 0, 10000, 0, 150);
-		escalaP = PApplet.map(promedioPuntos, 0, 1000, 0, 150);
+		escalaP = PApplet.map(promedioPuntos, 0, 1000, 0, 150); 
 		if (trans >= 100) {
 			if (tam[0] > -150) {
 				tam[0] += -1 * PApplet.dist(tam[0], tam[0], -escalaE, -escalaE) * 0.02f;
